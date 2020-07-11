@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>抽象工厂模式</title>
+</head>
+<body>
+    <script>
+        var VehicleFactory = function (subType, superType) {
+            if (typeof VehicleFactory[superType] === 'function') {
+                function F() {}
+                F.prototype = new VehicleFactory[superType]()
+                subType.constructor = subType
+                subType.prototype = new F()
+            } else {
+                throw new Error('未创建该抽象类')
+            }
+        }
+
+        VehicleFactory.Car = function () {
+            this.type = 'Car'
+        }
+
+        VehicleFactory.Car.prototype = {
+            getPrice () {
+                return new Error('抽象方法不能调用')
+            },
+            getSpeed () {
+                return new Error('抽象方法不能调用')
+            }
+        }
+
+        VehicleFactory.Bus = function () {
+            this.type = 'bus'
+        }
+
+        VehicleFactory.Bus.prototype = {
+            getPrice () {
+                return new Error('抽象方法不能调用')
+            },
+            getPassengerNum () {
+                return new Error('抽象方法不能调用')
+            }
+        }
+
+        VehicleFactory.Truck = function () {
+            this.type = 'truck'
+        }
+
+        VehicleFactory.Truck = function () {
+            this.type = 'truck'
+        }
+
+        VehicleFactory.Truck.prototype = {
+            getPrice () {
+                return new Error('抽象方法不能调用')
+            },
+            getTrainload () {
+                return new Error('抽象方法不能调用')
+            }
+        }
+
+    </script>
+</body>
+</html>
