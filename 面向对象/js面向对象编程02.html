@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>js面向对象编程</title>
+	</head>
+	<body>
+		<script>
+			var Book = (function () {
+				// 静态私有变量
+				var bookNum = 0
+				// 静态私有方法
+				function checkBook(name) {}
+				// 创建类
+				function _book (newId, newName, newPrice) {
+					// 私有变量
+					var name, price
+					// 私有方法
+					function checkID (id) {}
+					this.getName = function () {}
+					this.getPrice = function () {}
+					this.setName = function () {}
+					this.setPrice = function () {}
+					this.id = newId
+					this.copy = function () {}
+					bookNum++
+					if (bookNum > 100) {
+						throw new Error('我们仅仅出版100本书')
+					}
+					this.setName(name)
+					this.setPrice(price)
+				}
+				_book.prototype = {
+					// 静态共有属性
+					isJSBOOK: false,
+					// 静态共有方法
+					display: function () {}
+				}
+				return _book
+			})()
+			
+		</script>
+	</body>
+</html>

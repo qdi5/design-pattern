@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>寄生式继承</title>
+	</head>
+	<body>
+		<script>
+			function inheritObject(p) {
+				function F() {}
+				F.prototype = p
+				return new F()
+			}
+			var book = {
+				name: 'js book',
+				alikeBook: ['css book','html book']
+			}
+			function createBook (obj) {
+				var o = inheritObject(obj)
+				console.log('inheritObject.prototype:\r\n', inheritObject.prototype)
+				console.log(o)
+				o.getName = function () {
+					return this.name
+				}
+				return o
+			}
+			var bk = createBook(book)
+			console.log(bk.getName())
+			bk.alikeBook.push('haha')
+			var bk2 = createBook(book)
+			console.log(bk2.alikeBook)
+		</script>
+	</body>
+</html>

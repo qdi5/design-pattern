@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>面向对象编程</title>
+	</head>
+	<body>
+		<script>
+			Function.prototype.addMethod = function (name, fn) {
+				this.prototype[name] = fn
+				return this
+			}
+			var Methods = function () {}
+			Methods.addMethod('checkName', function () {
+				console.log('验证姓名')
+				return this
+			}).addMethod('checkEmail', function () {
+				console.log('验证邮箱')
+				return this
+			})
+			/* var m = new Methods ()
+			m.checkEmail().checkName() */
+			
+			
+			// practice
+			// 1、真假对象一节中如何实现方法的链式调用呢？
+			var CheckObject = function () {
+				return {
+					checkName: function () {
+						console.log('验证姓名')
+						return this
+					},
+					checkEmail: function () {
+						console.log('验证邮箱')
+						return this
+					},
+					checkPassword: function () {
+						console.log('验证密码')
+						return this
+					}
+				}
+			}
+			var a = CheckObject()
+			a.checkEmail().checkName().checkPassword()
+			var b = CheckObject()
+			console.log(a == b)
+			b.checkName().checkPassword()
+			
+			// 2、试着定义一个可以为函数添加多个方法的addMethod方法
+			/* 
+			两个参数，则认为是添加一个方法
+			如果是一个参数，则认为是添加多个方法
+			[{
+					name: xx,
+					method: fn,
+			}] */
+			/** 
+			 * 可传递一个参数或两个参数；
+			 * 一个参数时，是一个数组: [{name: 'wx', fn: function() {}}]
+			 * 两个参数时，传入函数名和函数
+			 */
+			// 3、试着定义一个既可为函数原型添加方法又可为其自身添加方法的addMethod方法
+			Function.addMethod = Function.prototype.addMethod = function () {
+				var argLength = arguments.length
+				var target = this instanceof Function ? this.prototype : this
+				if (argLength === 1) {
+					arguments[0].forEach(function (item) {
+						target[item.name] = item.fn
+					})
+				} else if (argLength === 2) {
+					target[arguments[0]] = arguments[1]
+				}
+				// 这里的this指向的是Function的实例对象
+				return this
+			}
+			var f = function () {}
+			f.addMethod([
+				{
+					name: 'wuzhe', 
+					fn: function () {
+						console.log('wuzhe')
+						return this
+					}
+				},
+				{
+					name: 'haha', 
+					fn: function () {
+						console.log('haha')
+						return this
+					}
+				}
+			])
+			f.addMethod('heihei', function() {
+				console.log('heihei')
+				return this
+			})
+			Function.addMethod('mojo', function(){
+				console.log('mojo')
+			})
+			var fi = new f()
+			Function.mojo()
+			fi.wuzhe().haha().heihei().mojo()
+			
+		</script>
+	</body>
+</html>

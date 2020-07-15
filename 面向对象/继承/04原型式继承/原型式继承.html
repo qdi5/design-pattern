@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>原型式继承</title>
+	</head>
+	<body>
+		<script>
+			function inheritObject(o) {
+				function F () {}
+				F.prototype = o
+				return new F()
+			}
+			
+			var book = {
+				name: 'js book',
+				alikeBook: ['css book', 'html book']
+			}
+			var newBook = inheritObject(book)
+			newBook.name = 'ajax book'
+			newBook.alikeBook.push('xml book')
+			
+			var otherBook = inheritObject(book)
+			otherBook.name = 'flash book'
+			otherBook.alikeBook.push('as book')
+			
+			console.log(newBook.alikeBook, otherBook.alikeBook, book.alikeBook)
+		</script>
+	</body>
+</html>

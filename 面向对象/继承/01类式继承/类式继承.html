@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>类式继承</title>
+	</head>
+	<body>
+		<h2>这种继承的缺点</h2>
+		<p>1、由于子类通过其原型prototype对父类实例化，继承了父类。所以说父类中的共有属性要是引用类型，就会在子类中被所有实例共用</p>
+		<p>因此一个子类的实例更改，子类原型从父类构造函数中继承来的共有属性就会直接影响到其他子类</p>
+		<p>2、</p>
+		<script>
+			function SuperClass (value) {
+				this.superValue = value
+				this.books = ['javascript', 'html', 'css']
+			}
+			SuperClass.prototype.getSuperValue = function () {
+				return this.superValue
+			}
+			function SubClass (value) {
+				this.subValue = value
+			}
+			// 这个对象拥有父类的属性，和访问父类原型的能力
+			/* {
+				superValue: '父类的值',
+				getSubValue: f()
+			} */
+			var subProto = SubClass.prototype = new SuperClass('我是父类啊')
+			console.log('subProto:\r\n', subProto)
+			SubClass.prototype.getSubValue = function () {
+				return this.subValue
+			}
+			// 这个对象拥有子类的属性，和访问自身原型的能力（也就是new SuperClass）
+			var scIns = new SubClass('我是子类啊')
+			console.log(scIns.getSuperValue())
+			console.log(scIns.superValue)
+			console.log(scIns.subValue)
+			var scIns2 = new SubClass('我是第二个子类')
+			scIns2.books.push('设计模式')
+			console.log(scIns.books)
+			console.log(scIns2.getSubValue())
+			console.log(scIns2.getSuperValue())
+			
+		</script>
+	</body>
+</html>

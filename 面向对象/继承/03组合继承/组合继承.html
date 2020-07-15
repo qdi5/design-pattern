@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>组合继承</title>
+	</head>
+	<body>
+		<script>
+			function SuperClass(name) {
+				this.name = name
+				this.books = ['html', 'css', 'js']
+			}
+			SuperClass.prototype.getName = function () {
+				console.log(this.name)
+			}
+			function SubClass(name, time) {
+				SuperClass.call(this, name)
+				this.time = time
+			}
+			SubClass.prototype = new SuperClass()
+			SubClass.prototype.getTime = function () {
+				console.log(this.time)
+			}
+			var subIns01 = new SubClass('子类01', 1)
+			subIns01.books.push('设计模式')
+			console.log(subIns01.books)
+			var subIns02 = new SubClass('子类2', 2)
+			console.log(subIns02.books)
+		</script>
+	</body>
+</html>
