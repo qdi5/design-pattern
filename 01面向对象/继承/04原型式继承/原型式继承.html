@@ -6,6 +6,7 @@
 	</head>
 	<body>
 		<script>
+			// 以传入的对象作为原型，创建一个新的实例对象，达到继承原型上的属性的目的
 			function inheritObject(o) {
 				function F () {}
 				F.prototype = o

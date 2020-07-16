@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>原型模式</title>
+</head>
+<body>
+    <script>
+        var LoopImages = function (imgArr, container) {
+            this.imagesArray = imgArr
+            this.container = container
+            this.createImage = function () {}
+            this.changeImage = function () {}
+        }
+        var SlideLoopImg = function (imgArr, container) {
+            LoopImages.call(this, imgArr, container)
+            this.changeImage = function () {
+                console.log('SlideLoopImg changeImage function')
+            }
+        }
+        var FadeLoopImg = function (imgArr, container, arrow) {
+            LoopImages.call(this, imgArr, container)
+            this.arrow = arrow
+            this.changeImage = function () {
+                console.log('FadeLoopImg changeImage function')
+            }
+        }
+        var fadeImg = new FadeLoopImg([
+            'https://huaban.com/pins/3296417187/',
+            'https://huaban.com/pins/3296417205/',
+            'https://huaban.com/pins/3296417155/'
+        ], 'slide', ['left.jpg','right.jpg'])
+        fadeImg.changeImage()
+
+        // 原型继承
+        function prototypeExtend () {
+            var F = function () {},
+                args = arguments,
+                i = 0,
+                len = args.length
+            for (; i < len; i++) {
+                for (var j in args[i]) {
+                    F.prototype[j] = args[i][j]
+                }
+            }
+            return new F()
+        }
+        var penguin = prototypeExtend({
+            speed: 20,
+            swim: function () {
+                console.log('游泳速度' + this.speed)
+            }
+        },
+        {
+            run: function (speed) {
+                console.log('奔跑速度' + speed)
+            }
+        },
+        {
+            jump: function () {
+                console.log('跳跃动作')
+            }
+        })
+        penguin.swim()
+        penguin.run(10)
+        penguin.jump()
+    </script>
+</body>
+</html>

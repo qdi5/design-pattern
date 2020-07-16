@@ -14,6 +14,7 @@
 				console.log(this.name)
 			}
 			function SubClass(name, time) {
+				// 指定调用SuperClass时的this为当前SubClass的实例对象
 				SuperClass.call(this, name)
 				this.time = time
 			}

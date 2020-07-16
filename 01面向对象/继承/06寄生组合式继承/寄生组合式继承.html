@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>寄生组合式继承</title>
+</head>
+<body>
+    <script>
+    function inheritObject (o) {
+        function F () {}
+        F.prototype = o
+        return new F()
+    }
+    /**
+     * 寄生参数 subClass
+     * 传递参数 superClass
+     * */
+    function inheritPrototype (subClass, superClass) {
+        var p = inheritObject(superClass.prototype)
+        p.constructor = subClass
+        subClass.prototype = p
+    }
+    function SuperClass (name) {
+        this.name = name
+        this.colors = ['red', 'blue', 'green']
+    }
+    SuperClass.prototype.getName = function () {
+        console.log(this.name)
+    }
+    function SubClass(name, time) {
+        SuperClass.call(this, name)
+        this.time = time
+    }
+    inheritPrototype(SubClass, SuperClass)
+    SubClass.prototype.getTime = function () {
+        console.log(this.time)
+    }
+    var instance01 = new SubClass('js book', 2014)
+    var instance02 = new SubClass('css book', 2015)
+    instance01.colors.push('black')
+    console.log(instance01.colors)
+    console.log(instance02.colors)
+    instance02.getName()
+    instance02.getTime()
+    </script>
+</body>
+</html>

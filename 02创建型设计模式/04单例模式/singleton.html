@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单例模式</title>
+</head>
+<body>
+    <script>
+        // 惰性单例
+        var LazySingle = (function () {
+            var _instance = null
+            function Single () {
+                return {
+                    publicMethod: function () {},
+                    publicProperty: '1.0'
+                }
+            }
+            return function () {
+                if (!_instance) {
+                    _instance = Single()
+                }
+                return _instance
+            }
+        })()
+        const single01 = LazySingle()
+        const single02 = LazySingle()
+        console.log(single01 === single02)
+        console.log(LazySingle().publicProperty)
+    </script>
+</body>
+</html>
