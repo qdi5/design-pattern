@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>外观模式</title>
+</head>
+<body>
+    <div id="myinput">点击事件</div>
+    <script>
+        // 使用外观模式封装事件绑定
+        function addEvent(dom, type, fn) {
+            // DOM2级事件处理程序
+            if (dom.addEventListener) {
+                dom.addEventListener(type, fn, false)
+                // 支持attachEvent的浏览器
+            } else if (dom.attachEvent) {
+                dom.attachEvent('on' + type, fn)
+                // DOM0级事件
+            } else {
+                dom['on' + type] = fn
+            }
+        }
+        var myinput = document.getElementById('myinput')
+        addEvent(myinput, 'click', function () {
+            console.log('绑定第一个事件')
+        })
+        addEvent(myinput, 'click', function () {
+            console.log('绑定第二个事件')
+        })
+        addEvent(myinput, 'click', function () {
+            console.log('绑定第三个事件')
+        })
+        // 获取事件对象
+        var getEvent = function (event) {
+            return event || window.event
+        }
+        // 获取元素
+        var getTarget = function (event) {
+            var event = getEvent(event)
+            return event.target || event.srcElement
+        }
+        // 阻止默认行为
+        var preventDefault = function (event) {
+            var event = getEvent(event)
+            if (event.preventDefault) {
+                event.preventDefault()
+            } else {
+                event.returnValue = false
+            }
+        }
+        addEvent(document, 'click', function (e) {
+            preventDefault(e)
+            if (getTarget(e) !== document.getElementById('myinput')) {
+                alert('hide')
+            }
+        })
+    </script>
+</body>
+</html>
