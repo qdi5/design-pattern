@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>适配器模式</title>
+</head>
+<body>
+  <button id="mybutton">点我啊</button>
+  <script>
+    // 框架适配（jQuery）
+    var A = A || {}
+    A.g = function (id) {
+      return document.getElementById(id)
+    }
+
+    A.on = function (id, type, fn) {
+      var dom = typeof id === 'string' ? this.g(id) : id
+      if (dom.addEventListener) {
+        dom.addEventListener(type, fn, false)
+      } else if (dom.attachEvent) {
+        dom.attachEvent('on' + type, fn)
+      } else {
+        dom['on' + type] = fn
+      }
+    }
+
+    A.on(window, 'load', function () {
+      A.on('mybutton', 'click', function () {
+        console.log('点击按钮啦！')
+      })
+    })
+
+    A.g = function (id) {
+      return $(id).get(0)
+    }
+
+    A.on = function (id, type, fn) {
+      var dom = typeof id === 'string' ? $('#' +id) : $(id)
+      dom.on(type, fn)
+    }
+
+    // 参数适配器
+    function doSomething (name, title, age, color, size, prize) {}
+
+    function doSomething (obj) {
+      var _adapter = {
+        name: '雨夜清荷',
+        title: '设计模式',
+        age: 24,
+        color: 'pink',
+        size: 100,
+        prize: 50
+      }
+      for (var i in _adapter) {
+        _adapter[i] = obj[i] || _adapter[i]
+      }
+    }
+
+    // 数据适配
+    var arr = ['javascript', 'book', '前端编程语言', '8月1日']
+    var obj = {
+      name: '',
+      type: '',
+      title: '',
+      time: ''
+    }
+
+    function arrToObjAdapter(arr) {
+      return {
+        name: arr[0],
+        type: arr[1],
+        title: arr[2],
+        data: arr[3]
+      }
+    }
+    var adapterData = arrToObjAdapter(arr)
+    console.log(adapterData)
+
+    // 服务器端数据适配；解决前后端数据依赖
+    function ajaxAdapter(data) {
+      return [data['key1'], data['key2'], data['key3']]
+    }
+
+    $.ajax({
+      url: 'xxx',
+      success: function (data, status) {
+        if (data) {
+          doSomething(ajaxAdapter(data))
+        }
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>代理模式</title>
+</head>
+<body>
+  <p>
+    不同域名，不同端口号，不同协议，域名和ip，主域与子域，都会出现跨域的问题
+  </p>
+  <input id="photo" type="file" name="avatar" value="上传啊" />
+  <script src="../../jquery.js"></script>
+  <script>
+    function cb(obj) {
+      alert(123)
+    }
+    var fileInput = document.querySelector('#photo')
+		fileInput.onchange = function () {
+			debugger
+			var files = this.files
+			if (files.length === 0) {
+				return
+			}
+			var file = this.files[0]
+			uploadFile(file)
+		}
+    function uploadFile (file) {
+      var formData = new FormData()
+      formData.append(fileInput.getAttribute('name'), file)
+      $.ajax({
+        url: 'http://192.168.1.168:3000/upload/multiple',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        success: function () {
+          alert('上传成功')
+        }
+      })
+    }
+   
+    // img标签代理对象
+    var Count = (function () {
+      var img = new Image()
+      return function (param) {
+        var str = 'http://www.count.com/a.gif?'
+        for (var i in param) {
+          str += i + '=' + param[i]
+        }
+        _img.src = str
+      }
+    })()
+
+    // JSONP；script标签
+  </script>
+  <script src="http://localhost:3000/jsonp?callback=cb"></script>
+
+</body>
+</html>
