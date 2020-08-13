@@ -10,11 +10,14 @@
     不同域名，不同端口号，不同协议，域名和ip，主域与子域，都会出现跨域的问题
   </p>
   <input id="photo" type="file" name="avatar" value="上传啊" />
-  <script src="../../jquery.js"></script>
   <script>
-    function cb(obj) {
-      alert(123)
+     function cb(obj) {
+      alert(obj.user)
     }
+  </script>
+  <!-- <script src="../../jquery.js"></script>
+  <script>
+   
     var fileInput = document.querySelector('#photo')
 		fileInput.onchange = function () {
 			debugger
@@ -52,8 +55,15 @@
     })()
 
     // JSONP；script标签
+  </script> -->
+  <script src="../../jquery.js"></script>
+  <script src="./jsonp.js"></script>
+  <script>
+    jsonp('http://localhost:3000/jsonp',function (err, data){
+      console.log(data)
+    })
   </script>
-  <script src="http://localhost:3000/jsonp?callback=cb"></script>
-
+  <!-- <script src="http://localhost:3000/jsonp?callback=cb"></script> -->
+  
 </body>
 </html>
