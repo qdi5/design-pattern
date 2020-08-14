@@ -8,10 +8,10 @@ function noop(){}
  * JSONP handler
  *
  * Options:
- *  - param {String} qs parameter (`callback`)
- *  - prefix {String} qs parameter (`__jp`)
- *  - name {String} qs parameter (`prefix` + incr)
- *  - timeout {Number} how long after a timeout error is emitted (`60000`)
+ *  - param {String} qs parameter (`callback`) // 传递给服务器端的参数，callback
+ *  - prefix {String} qs parameter (`__jp`)  //  前端回调的函数的前缀
+ *  - name {String} qs parameter (`prefix` + incr) // 前端回调的函数名称，由“prefix + 自增id”组成
+ *  - timeout {Number} how long after a timeout error is emitted (`60000`) // 超时时间
  *
  * @param {String} url
  * @param {Object|Function} optional options / callback
