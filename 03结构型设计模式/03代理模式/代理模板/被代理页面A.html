@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>被代理页面A</title>
+</head>
+<body>
+  <iframe src="" frameborder="0" name="proxyIframe" id="proxyIframe"></iframe>
+  <!-- target表示，请求回来的数据展示的位置；这里指向了上面的iframe -->
+  <form action="http://localhost:3000/proxy" method="post" target="proxyIframe">
+    <!-- 回调函数的名字 -->
+    <input type="text" name="callback" value="callback">
+    <!-- 后端重定向的url地址 -->
+    <input type="text" name="proxy" value="http://localhost:5500/03%E7%BB%93%E6%9E%84%E5%9E%8B%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/03%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F/%E4%BB%A3%E7%90%86%E6%A8%A1%E6%9D%BF/%E4%BB%A3%E7%90%86%E9%A1%B5%E9%9D%A2B.html">
+    <button type="submit">提交</button>
+  </form>
+  <script>
+    function callback (data) {
+      alert(data)
+    }
+  </script>
+</body>
+</html>
