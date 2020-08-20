@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>装饰者模式</title>
+</head>
+<body>
+  <p>
+    对原有对象的属性与方法的添加
+  </p>
+  <h2>适配器模式与装饰器模式的区别</h2>
+  <p>
+    适配器模式：对原有对象适配，添加的方法与原有方法功能上大致相似；对对象内部解构的重组，因此，了解其自身结构是必需的；
+    装饰者模式：添加的方法与原来的方法功能项是有一定区别的；再有，使用适配器时我们新增的方法是要调用原来的方法。
+    不过再装饰者模式中，不需要了解对象原有的功能，并且对象原有的方法照样可以原封不动地使用。
+  </p>
+  <h2>测试</h2>
+  <form action="">
+    <p>
+      <label for="tel_input">手机号</label><input type="text" id="tel_input">
+    </p>
+    <p>
+      <label for="name_input">姓名</label><input type="text" id="name_input">
+    </p>
+    <p>
+      <label for="address_input">地址</label><input type="text" id="address_input">
+    </p>
+    <p><button type="submit">提交</button></p>
+  </form>
+  
+  <script>
+    // 装饰者
+    var decorator = function (input, fn) {
+      var input = document.getElementById(input)
+      if (typeof input.onclick === 'function') {
+        // 缓存事件源原有回调函数
+        var oldClickFn = input.onclick
+        // 为事件源定义新的事件
+        input.onclick = function () {
+          oldClickFn()
+          fn()
+        }
+      } else {
+        // 事件源未绑定事件，直接为事件源添加新增回调函数
+        input.onclick = fn
+      }
+      // 做其他事情
+    }
+
+    decorator('tel_input', function () {
+      document.getElementById('tel_demo_text').style.display = 'none'
+    })
+
+    decorator('name_input', function () {
+      document.getElementById('name_demo_text').style.display = 'none'
+    })
+
+    decorator('address_input', function () {
+      document.getElementById('address_demo_text').style.display = 'none'
+    })
+
+  </script>
+</body>
+</html>
